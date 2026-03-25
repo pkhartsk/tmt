@@ -139,6 +139,11 @@ rlJournalStart
         rlRun -s "tmt -c how=full run -r --dry plan -n /plans/full/tmt" 0 "Run plan (dry mode)"
     rlPhaseEnd
 
+    rlPhaseStartTest "Imported plan's import should not be resolved if disabled by adjust"
+        rlRun -s "tmt run --remove --dry plan --name /plans/imported/disabled-by-adjust" 2 "Expect no plans to be found"
+        rlRun -s "tmt -c distro=fedora-rawhide -c how=full plan show /plans/imported/disabled-by-adjust" 0 "Show plan correctly"
+    rlPhaseEnd
+
     rlPhaseStartCleanup
         rlRun "popd"
     rlPhaseEnd
